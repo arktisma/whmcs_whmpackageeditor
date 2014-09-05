@@ -1,0 +1,6 @@
+{
+	"require": {
+		"slim/slim": "2.*",
+		"gufy/cpanel-php":"~1.0"
+	}
+}
