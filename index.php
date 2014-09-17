@@ -93,6 +93,8 @@ $app->post("/update", function() use ($app) {
 
 	$plan = $body["plan"];
 	$changes = array();
+
+	// Update each WHM package
 	foreach($servers as $server) {
 		$cpanel = new \Gufy\CpanelPhp\Cpanel(array(
 			"host" => "https://" . $server["hostname"] . ":2087",
@@ -125,9 +127,18 @@ $app->post("/update", function() use ($app) {
 			$changes[] = $plan["name"] . " on " . $server["hostname"] . " updated: " . implode(",", $keys);
 
 		}
-		mysql_query("UPDATE tblproducts SET configoption3 = '" . intval($plan["limits"]["disk"]) . "' WHERE id = " . intval($plan["id"]));
-		mysql_query("UPDATE tblproducts SET configoption5 = '" . intval($plan["limits"]["bandwidth"]) . "' WHERE id = " . intval($plan["id"]));
-		mysql_query("UPDATE tblproducts SET description = '" . mysql_real_escape_string($plan["description"]) . "' WHERE id = " . intval($plan["id"]));
+	}
+	// Update WHMCS
+	$uPlanId	= intval($plan["id"]);
+	$uDisk		= intval($plan["limits"]["disk"]);
+	$uBw		= intval($plan["limits"]["bandwidth"]);
+	$uDesc		= mysql_real_escape_string($plan["description"]);
+	$uOverages	= $plan["limits"]["overage"] == 1 ? "1,MB,MB" : "";
+
+	$update = mysql_query("UPDATE tblproducts SET configoption3 = '$uDisk', configoption5 = '$uBw', description = '$uDesc', overagesenabled = '$uOverages', overagesdisklimit = $uDisk, overagesbwlimit = $uBw WHERE id = $uPlanId");
+	if($update === FALSE) {
+		$changes[] = "*** WARNING: Changes could not be synced to WHMCS - please resolve this manually! ***";
+		$changes[] = mysql_error();
 	}
 	echo json_encode($changes);
 });
