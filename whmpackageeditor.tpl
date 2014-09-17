@@ -63,7 +63,6 @@ app.controller("MainCtrl", ["$scope", "api", "normalize", function($scope, api, 
 	$scope.update = function() {
 		$scope.plan = angular.copy($scope.selected);
 	};
-	$scope.maxLength = 160;
 	$scope.submit = function() {
 		$scope.error = null;
 		$scope.sending = true;
