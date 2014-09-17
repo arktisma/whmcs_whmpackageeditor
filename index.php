@@ -35,7 +35,7 @@ $app->get("/plans", function() use ($app) {
 		return;
 	}
 
-	$qres = mysql_query("SELECT * FROM `tblproducts` p WHERE p.`type` = 'hostingaccount' and p.`configoption1` != '' and p.`servertype` = 'cpanel';");
+	$qres = mysql_query("SELECT * FROM `tblproducts` p WHERE p.`type` IN ( 'hostingaccount','reselleraccount') and p.`configoption1` != '' and p.`servertype` = 'cpanel';");
 	if($qres === FALSE) {
 		$app->makeError("Unable to get the list of hosting packages");
 		return;
