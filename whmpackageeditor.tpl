@@ -99,7 +99,6 @@ app.controller("MainCtrl", ["$scope", "api", "normalize", function($scope, api, 
 <div ng-app="whmpackageeditor" ng-controller="MainCtrl">
 
 <h2>Modify WHMCS/WHM plan limits together</h2>
-<p>Please use <a href="https://serversaurus.com.au/sync_packages.php" target="_blank">this page</a> to check if packages are in sync between WHM/WHMCS.</p>
 <hr>
 
 <form ng-submit="submit()">
