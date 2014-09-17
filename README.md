@@ -8,6 +8,8 @@ It allows for simultaneous editing of:
 * The nominal disk and bandwidth of a package in WHMCS, and the overage limits if applicable
 * The disk and bandwidth limits in the related WHM package
 
+![screenshot](http://i.imgur.com/A04SErX.png)
+
 ## Installation
 
 Extract so that the module is installed within `$WHMCS_ROOT/modules/addons/whmpackageeditor`.
